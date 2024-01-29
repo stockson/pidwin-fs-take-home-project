@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import runFlip from "../game/runFlip.js"
+import { isNumberBetween } from "../frontend_copy/validator.js"
 
 const flipCoin = async (req, res) => {
 	const userId = req.userId

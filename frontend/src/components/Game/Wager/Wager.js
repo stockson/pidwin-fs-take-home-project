@@ -3,7 +3,7 @@ import styles from "./styles.js"
 import { Button, TextField, InputAdornment } from "@mui/material"
 import { useState } from "react"
 import * as wagerTypes from "../../../constants/wagerTypes.js"
-import { isNumberBetween } from "../../../../../backend/frontend_copy/validator.js"
+import { isNumberBetween } from "../../../util/validator.js"
 import { flipCoin } from "../../../actions/game.js"
 import { useDispatch } from "react-redux";
 
@@ -35,20 +35,22 @@ const Wager = () => {
 
 	return (
 		<div id={css.wager}>
-			<div id="results"></div>
+			<div id="results">
+
+			</div>
 
 			<div className={css.inputs}>
 
 				<div className={css.picker}>
 					<Button
-						variant= {curType == wagerData.wagerType.HEADS ? "contained" : "outline"}
+						variant= {wagerData.wagerType === wagerTypes.HEADS ? "contained" : "outline"}
 						color="secondary"
 						sx={styles.button}
-						onClick={() => clickPicker(wagerData.wagerType.HEADS)}
+						onClick={() => clickPicker(wagerTypes.HEADS)}
 					>Heads</Button>
 
 					<Button
-						variant= {curType == wagerTypes.TAILS ? "contained" : "outline"}
+						variant= {wagerData.wagerType === wagerTypes.TAILS ? "contained" : "outline"}
 						color="secondary"
 						sx={styles.button}
 						onClick={() => clickPicker(wagerTypes.TAILS)}

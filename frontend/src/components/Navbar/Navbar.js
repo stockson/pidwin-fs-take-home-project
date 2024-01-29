@@ -73,7 +73,7 @@ const Navbar = () => {
               >
                 Set Password
               </Button>
-              <Button
+              {/* <Button
                 variant="contained"
                 color="secondary"
                 onClick={() => {
@@ -81,7 +81,7 @@ const Navbar = () => {
                 }}
               >
                 Reset
-              </Button>
+              </Button> */}
             </div>
           ) : (
             <Button

@@ -27,6 +27,9 @@ const login = async (req, res) => {
         name: existingUser.name,
         email: existingUser.email,
         password: existingUser.password,
+
+        tokens: existingUser.tokens,
+        history: existingUser.history,
       },
       "test",
       { expiresIn: "1h" }
