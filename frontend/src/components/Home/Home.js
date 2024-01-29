@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Grow, Paper, Typography } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
+import Game from "../Game/Game";
 
 const Home = () => {
 
@@ -10,21 +11,15 @@ const Home = () => {
   const isSingedIn = user;
 
   return (
-    <Grow in>
-      <Container component="main" maxWidth="sm">
-        <Paper elevation={3}>
-          {isSingedIn !== "null" && isSingedIn !== null ? (
-            <Typography variant="h4" align="center" color="primary">
-              {`Welcome ${user.name}`}
-            </Typography>
-          ) : (
-            <Typography variant="h4" align="center" color="primary">
-              Login to Play
-            </Typography>
-          )}
-        </Paper>
-      </Container>
-    </Grow>
+    <>
+      {isSingedIn !== "null" && isSingedIn !== null ? (
+        <Game />
+      ) : (
+        <Typography variant="h4" align="center" color="primary">
+          Login to Play
+        </Typography>
+      )}
+    </>
   );
 };
 

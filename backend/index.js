@@ -4,8 +4,10 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from 'dotenv';
 import userRouter from "./src/api/user.js";
+import validateEnv from "./src/utils/validateEnv.js";
 
 dotenv.config();
+validateEnv()
 
 const app = express();
 app.use(bodyParser.json({ limit: "5mb", extended: true }));

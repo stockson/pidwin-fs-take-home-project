@@ -3,9 +3,12 @@ import { theme } from "../../themes/Default";
 import { deepPurple } from "@mui/material/colors";
 
 export const styles = {
+  appBarWrap: {
+    padding: theme.spacing(4)
+  },
   appBar: {
     borderRadius: 15,
-    margin: "30px 0",
+    // margin: "30px 0",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -23,7 +26,8 @@ export const styles = {
   },
   profile: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "right",
+    gap: "20px",
     width: "600px",
   },
   userName: {

@@ -1,0 +1,29 @@
+
+#wager {
+	/* height 100% on #game isn't working because of NavBar */
+	/* switching to absolute */
+	/* position: relative; */
+	position: absolute;
+
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+
+	width: 50%;
+}
+
+#wager .inputs {
+	width: 400px;
+	margin: 0 auto;
+}
+
+#wager .picker {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+
+#wager .submit {
+	margin-top: 40px;
+}

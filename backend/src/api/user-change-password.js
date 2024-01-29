@@ -2,10 +2,16 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 
 const changePassword = async (req, res) => {
-  const { email, oldPassword, newPassword } = req.body;
+  const userId = req.userId
+  if (!userId) return res.status(401).json({ message: "Not Authorized" });
+
+  // patched for security vulnerability: paramater tampering
+  // const { email, oldPassword, newPassword } = req.body;
+  const { oldPassword, newPassword } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email });
+    // const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ _id: userId });
 
     if (!existingUser) {
       return res.status(404).json({ message: "User Does Not Exist" });
