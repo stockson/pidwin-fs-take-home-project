@@ -11,14 +11,12 @@ import Input from "../Login/Input";
 import { styles } from "./styles";
 import LockIcon from "@mui/icons-material/LockRounded";
 import { changePassword } from "../../actions/login";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import getUser from "../../util/getUser"
 
 const PasswordSetting = () => {
-  const user = localStorage.getItem("profile")
-    ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-    : "null";
+  const user = getUser()
   const isSingedIn = user;
   const history = useNavigate();
   const [showPassword, setShowPassword] = useState(false);

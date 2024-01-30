@@ -1,4 +1,4 @@
-import { isNumberBetween } from "../../../backend/frontend_copy/validator"
+import { isNumberBetween } from "../src/shared/validator"
 
 
 describe("validator - isNumberBetween", () => {

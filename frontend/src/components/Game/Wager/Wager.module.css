@@ -6,14 +6,14 @@
 	position: absolute;
 
 	left: 50%;
-	top: 50%;
+	top: calc(50% + 50px);
 	transform: translate(-50%, -50%);
 
 	width: 50%;
 }
 
 #wager .inputs {
-	width: 400px;
+	width: 200px;
 	margin: 0 auto;
 }
 
@@ -24,6 +24,12 @@
 }
 
 
-#wager .submit {
-	margin-top: 40px;
+
+#wagerResults {
+	height: 150px;
+	padding: 20px 0;
+	/* border: solid #000 1px; */
+	text-align: center;
+	font: 1.5rem tahoma, arial, sans-serif;
+	line-height: 2rem;
 }

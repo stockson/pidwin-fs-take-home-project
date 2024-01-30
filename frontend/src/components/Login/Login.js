@@ -8,12 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import Input from "./Input";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signup, login } from "../../actions/login";
 import LockIcon from "@mui/icons-material/LockOutlined";
 import { styles } from "./styles";
+
+import getUser from "../../util/getUser.js"
+
 
 const formDataInitVal = {
   firstName: "",
@@ -27,9 +30,8 @@ const Login = () => {
   const [formData, setFormData] = useState(formDataInitVal);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const user = localStorage.getItem("profile")
-    ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-    : "null";
+
+  const user = getUser()
 
   const dispatch = useDispatch();
   const history = useNavigate();

@@ -12,7 +12,11 @@ const auth = async (req, res, next) => {
       req.userId = decodedData?._id;
     } else {
       decodedData = jwt.decode(token);
-      req.userId = decodedData?.sub;
+
+      // not sure what this is for
+      // req.userId = decodedData?.sub;
+
+      req.userId = decodedData._id
     }
 
     next();

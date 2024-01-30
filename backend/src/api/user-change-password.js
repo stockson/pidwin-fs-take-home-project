@@ -31,13 +31,14 @@ const changePassword = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 12);
-    const updatePassword = await User.findByIdAndUpdate(
+    // const updatePassword = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       existingUser._id,
       { password: hashedPassword },
       { new: true }
     );
 
-    res.status(200).json(updatePassword);
+    res.status(200).json({});
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }

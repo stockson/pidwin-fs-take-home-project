@@ -1,9 +1,9 @@
 
 
-export default {
+const styles = {
 	submit: {
 		fontSize: "1.3rem",
-		marginTop: "20px"
+		marginTop: "10px"
 	},
 	amount: {
 	},
@@ -11,3 +11,4 @@ export default {
 		width: "50%"
 	}
 }
+export default styles

@@ -3,11 +3,11 @@ import { Container, Grow, Paper, Typography } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import Game from "../Game/Game";
 
-const Home = () => {
+import getUser from "../../util/getUser.js";
 
-  const user = localStorage.getItem("profile")
-    ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-    : "null";
+const Home = () => {
+  const user = getUser()
+
   const isSingedIn = user;
 
   return (

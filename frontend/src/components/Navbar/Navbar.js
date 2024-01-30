@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { jwtDecode } from "jwt-decode";
 import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
+import getUser from "../../util/getUser.js"
+import { restart } from "../../actions/game.js"
 
 const Navbar = () => {
-  const [user, setUser] = useState(
-    localStorage.getItem("profile")
-      ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-      : "null"
-  );
+  const initUser = getUser()
+  const [user, setUser] = useState( initUser );
   const dispatch = useDispatch();
   let location = useLocation();
   const history = useNavigate();
@@ -22,15 +20,18 @@ const Navbar = () => {
     setUser("null");
   };
 
+  const restartHandle = () => {
+    // dispatch({ type: actionType.RESTART });
+    dispatch(restart());
+    history("/")
+  }
+
   useEffect(() => {
     if (user !== "null" && user !== null) {
       if (user.exp * 1000 < new Date().getTime()) logout();
     }
-    setUser(
-      localStorage.getItem("profile")
-        ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-        : "null"
-    );
+    const defUser = getUser()
+    setUser(defUser);
   }, [location]);
 
   return (
@@ -58,14 +59,6 @@ const Navbar = () => {
               </Typography>
               <Button
                 variant="contained"
-                sx={styles.logout}
-                color="secondary"
-                onClick={logout}
-              >
-                Logout
-              </Button>
-              <Button
-                variant="contained"
                 color="secondary"
                 onClick={() => {
                   history("/password");
@@ -73,15 +66,21 @@ const Navbar = () => {
               >
                 Set Password
               </Button>
-              {/* <Button
+              <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => {
-                  history("/reset");
-                }}
+                onClick={restartHandle}
               >
-                Reset
-              </Button> */}
+                Restart
+              </Button>
+              <Button
+                variant="contained"
+                sx={styles.logout}
+                color="secondary"
+                onClick={logout}
+              >
+                Logout
+              </Button>
             </div>
           ) : (
             <Button

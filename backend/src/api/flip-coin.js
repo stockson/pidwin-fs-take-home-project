@@ -1,30 +1,43 @@
 import User from "../models/user.js";
 import runFlip from "../game/runFlip.js"
-import { isNumberBetween } from "../frontend_copy/validator.js"
+
+// import { isNumberBetween } from "../../../frontend/src/shared/validator.js"
+import { isNumberBetween } from "../copied_from_front/validator.js"
+import getMultiplier from "../game/getMultiplier.js"
+
+import outUser from "../utils/outUser.js"
 
 const flipCoin = async (req, res) => {
 	const userId = req.userId
-	if (!userId)
+	if (!userId) {
+    console.error("No User ID")
 		return res.status(401).json({ message: "Unauthenticated" });
+  }
 
-  const { wagerType, amount } = req.body;
+  let { wagerType, wagerAmount } = req.body;
 
   try {
-    const { tokens, history } = await User.findOne({ _id: userId });
+    const existingUser = await User.findOne({ _id: userId });
 
     if (!existingUser) {
       return res.status(404).json({ message: "User Does Not Exist" });
     }
 
+    let { tokens, history } = existingUser
+
 		// redundant with frontend, replaying here for security/bug-catching
-		const { err } = isNumberBetween(amount, 1, tokens)
+		const { err, result } = isNumberBetween(wagerAmount, 1, tokens)
+    wagerAmount = result
+
+    if (err) console.error(err)
 		if (err) return res.status(400).json({ message: err })
 
-		const delta = runFlip(wagerType, amount)
-		const { mult, multText } = getMultiplier(amountDelta, history)
+		const { delta, resultType } = runFlip(wagerType, wagerAmount)
+		const { mult, multText } = getMultiplier(delta, history)
 
 		history.unshift({ wagerType, delta, mult: mult, createdDate: new Date() })
 		history = history.slice(0, 10)
+
 		tokens += ( delta * mult )
 
     const respUser = await User.findByIdAndUpdate(
@@ -33,14 +46,14 @@ const flipCoin = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json({
-      // may as well sync to response if it's availble:
-      tokens: respUser.tokens,
-      history: respUser.history,
+    const userData = outUser(respUser)
 
-      mult, multText, delta
+    res.status(200).json({
+      user: userData,
+      result: { mult, multText, delta, resultType },
     });
   } catch (error) {
+    console.error(error)
     res.status(500).json({ message: "Something went wrong" });
   }
 };

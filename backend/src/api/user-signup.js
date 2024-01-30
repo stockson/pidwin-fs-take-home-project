@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+import outUser from "../utils/outUser.js"
 
 const signup = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
@@ -24,18 +25,14 @@ const signup = async (req, res) => {
     const token = jwt.sign(
       {
         _id: result._id,
-        name: result.name,
-        email: result.email,
-        password: result.hashedPassword,
-
-        tokens: existingUser.tokens,
-        history: existingUser.history,
       },
-      "test",
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ token });
+    const userData = outUser(result)
+
+    res.status(200).json({ token, user: userData });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
     console.log(error);

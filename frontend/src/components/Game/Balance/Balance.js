@@ -1,14 +1,11 @@
 // import styles from './Balance.module.css'
 import styles from "./styles.js"
-import { jwtDecode } from "jwt-decode";
+import getUser from "../../../util/getUser.js"
+import { useSelector } from "react-redux"
 
 
 const Balance = () => {
-  const user = localStorage.getItem("profile")
-    ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-    : "null";
-
-	console.log(user)
+	const user = getUser()
 
 	return (
 		<div style={styles.balance}>

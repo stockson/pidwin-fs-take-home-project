@@ -2,10 +2,14 @@ import axios from "axios";
 
 const API = axios.create({ baseURL: "http://localhost:5000" });
 API.interceptors.request.use((req) => {
-  if (localStorage.getItem("profile")) {
-    req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("profile")).token
+  // if (localStorage.getItem("profile")) {
+  //   req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("profile")).token
+  //     }`;
+  if (localStorage.getItem("token")) {
+    req.headers.Authorization = `Bearer ${localStorage.getItem("token")
       }`;
   }
+
   return req;
 });
 
@@ -16,4 +20,6 @@ export const changePassword = (formData) =>
   API.post("/api/user/changePassword", formData);
 
 // Game
-export const flipCoin = (flipData) => API.post("/api/game/flipCoin", flipData);
+// keeping route path because user is mutating
+export const flipCoin = (flipData) => API.post("/api/user/flipCoin", flipData);
+export const restart = () => API.post("/api/user/restart");
