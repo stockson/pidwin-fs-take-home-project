@@ -27,8 +27,8 @@ const login = async (req, res) => {
         _id: existingUser._id,
         // password: existingUser.password,
       },
-      "test",
-      // process.env.JWT_SECRET,
+      // "test",
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 

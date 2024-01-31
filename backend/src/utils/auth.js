@@ -22,6 +22,9 @@ const auth = async (req, res, next) => {
     next();
   } catch (error) {
     // access URL when logged out? Untested
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "Token Expired", expired: true });
+    }
     console.error(error)
     res.status(500).json({ message: "Something went wrong" })
   }

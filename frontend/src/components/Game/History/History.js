@@ -1,8 +1,6 @@
 import css from "./History.module.css"
-import getUser from "../../../util/getUser.js"
 
-const History = () => {
-	const user = getUser()
+const History = ({ user }) => {
 	const historyAr = user.history
 
 	const displayDelta = (delta) => delta > 0 ? `+${delta}` : delta

@@ -9,8 +9,9 @@ const loginReducer = (state = getUserInitial(), action) => {
             return { ...state, token: action?.data?.token, user: action?.data?.user };
 
         case LOGOUT:
+            console.log("logout reducer")
             localStorage.clear();
-            return { ...state };
+            return { ...state, token: null, user: null};
 
         default:
             return state;

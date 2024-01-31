@@ -6,10 +6,12 @@ import Wager from "./Wager/Wager"
 
 import { flipCoin } from "../../actions/game.js"
 import { useDispatch } from "react-redux";
-import * as messages from "../../messages"
+// import * as messages from "../../messages"
+
+import { restart } from "../../actions/game.js"
 
 import { useState } from "react"
-// import getUser from "../../util/getUser.js"
+import getUser from "../../util/getUser.js"
 
 const resultInit = {
   mult: null,
@@ -19,6 +21,8 @@ const resultInit = {
 }
 
 const Game = () => {
+  const initUser = getUser()
+  const [user, setUser] = useState( initUser )
 
   const [result, setResult] = useState(resultInit)
 
@@ -31,14 +35,31 @@ const Game = () => {
     const flipCoinFn = flipCoin(wagerData)
     const resp = await flipCoinFn(dispatch)
     setResult(resp)
+
+    // awkardly forcing render
+    const newUser = getUser()
+    setUser(newUser)
 	}
+
+
+  const restartHandle = async () => {
+    // dispatch({ type: actionType.RESTART });
+    await dispatch(restart());
+    const resetUser = getUser()
+    setUser( resetUser )
+  }
 
 
   return (
     <div id={css.game} style={styles.game} >
-      <Balance />
-      <History history={result}/>
-      <Wager flipCoinHandle={flipCoinHandle} result={result}/>
+      <Balance user={user}/>
+      <History user={user}/>
+      <Wager
+        flipCoinHandle={flipCoinHandle}
+        restart={restartHandle}
+        result={result}
+        user={user}
+      />
     </div>
   )
 }

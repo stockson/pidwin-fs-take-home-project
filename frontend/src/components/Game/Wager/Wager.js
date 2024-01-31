@@ -15,7 +15,7 @@ const initWagerData = {
 	wagerAmount: 0,
 }
 
-const Wager = ({ flipCoinHandle, result }) => {
+const Wager = ({ flipCoinHandle, restart, result, user }) => {
 
 	const [wagerData, setWagerData] = useState(initWagerData)
 	const [amountErr, setAmountErr] = useState(null)
@@ -35,7 +35,7 @@ const Wager = ({ flipCoinHandle, result }) => {
 
 	const flipCoinWrap = (e) => {
 		e.preventDefault()
-		const { valid, err } = isNumberBetween(wagerData.wagerAmount, 1, 100)
+		const { valid, err } = isNumberBetween(wagerData.wagerAmount, 1, user.tokens)
 		if (!valid) return messages.error(err)
 		flipCoinHandle(wagerData)
 	}
@@ -93,6 +93,14 @@ const Wager = ({ flipCoinHandle, result }) => {
 					color="primary"
 					onClick={flipCoinWrap}
 				>Flip Coin</Button>
+				<Button
+					type="submit"
+					fullWidth
+					sx={styles.submit}
+					variant="outline"
+					color="secondary"
+					onClick={restart}
+				>Restart</Button>
 
 			</div>
 		</div>

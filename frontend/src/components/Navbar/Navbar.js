@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
 import getUser from "../../util/getUser.js"
-import { restart } from "../../actions/game.js"
 
 const Navbar = () => {
   const initUser = getUser()
@@ -20,11 +19,12 @@ const Navbar = () => {
     setUser("null");
   };
 
-  const restartHandle = () => {
-    // dispatch({ type: actionType.RESTART });
-    dispatch(restart());
-    history("/")
-  }
+  // const restartHandle = () => {
+  //   // dispatch({ type: actionType.RESTART });
+  //   dispatch(restart(history));
+  //   const resetUser = getUser()
+  //   setUser( resetUser )
+  // }
 
   useEffect(() => {
     if (user !== "null" && user !== null) {
@@ -66,13 +66,13 @@ const Navbar = () => {
               >
                 Set Password
               </Button>
-              <Button
+              {/* <Button
                 variant="contained"
                 color="secondary"
                 onClick={restartHandle}
               >
                 Restart
-              </Button>
+              </Button> */}
               <Button
                 variant="contained"
                 sx={styles.logout}
