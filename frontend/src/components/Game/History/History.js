@@ -1,7 +1,6 @@
 import css from "./History.module.css"
 
-const History = ({ user }) => {
-	const historyAr = user.history
+const History = ({ game: { history }}) => {
 
 	const displayDelta = (delta) => delta > 0 ? `+${delta}` : delta
 
@@ -9,7 +8,7 @@ const History = ({ user }) => {
 		<div id={css.history}>
 			<h1>Recent Tosses</h1>
 			<ul>
-				{historyAr.map( (hi) => {
+				{history.map( (hi) => {
 					return (
 						<li key={hi.createdDate.toString()}>
 							{hi.wagerType}: {displayDelta(hi.delta)} { hi > 1 ? `(x${hi.mult})` : ""}

@@ -1,22 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
-import getUser from "../../util/getUser.js"
+// import getUser from "../../util/getUser.js"
+import { getToken } from "../../util/localStorage";
+import * as messages from "../../messages";
 
 const Navbar = () => {
-  const initUser = getUser()
-  const [user, setUser] = useState( initUser );
+  // const initUser = getUser() // move to App, include game ?
+  // const [user, setUser] = useState( initUser );
+  const profile = useSelector((state) => state.profile);
+
   const dispatch = useDispatch();
   let location = useLocation();
   const history = useNavigate();
 
   const logout = () => {
+
+    // not sure how to do parent reducer for both
     dispatch({ type: actionType.LOGOUT });
+    dispatch({ type: actionType.GAME_LOGOUT });
+
     history("/auth");
-    setUser("null");
+    // setUser("null"); // dispatch should handle this?
   };
 
   // const restartHandle = () => {
@@ -25,14 +33,26 @@ const Navbar = () => {
   //   const resetUser = getUser()
   //   setUser( resetUser )
   // }
+  const user = profile
+  const loggedIn = user && user.name
 
+  // move this out of NavBar
   useEffect(() => {
-    if (user !== "null" && user !== null) {
-      if (user.exp * 1000 < new Date().getTime()) logout();
+    if (loggedIn) {
+      const tokenData = getToken()
+      if (!tokenData) {
+        messages.error("Local Storage Data Missing, Logging Out")
+        return logout()
+      }
+      if (tokenData.decode.exp * 1000 < new Date().getTime()) {
+        messages.error("Login Expired, Logging Out")
+        logout();
+      }
     }
-    const defUser = getUser()
-    setUser(defUser);
+    // const defUser = getUser()
+    // setUser(defUser);
   }, [location]);
+
 
   return (
     <div style={styles.appBarWrap}>
@@ -49,7 +69,7 @@ const Navbar = () => {
           </Typography>
         </div>
         <Toolbar sx={styles.toolbar}>
-          {user !== "null" && user !== null ? (
+          {loggedIn ? (
             <div style={styles.profile}>
               <Avatar sx={styles.purple} alt={user.name} src={user.picture}>
                 {user.name.charAt(0)}

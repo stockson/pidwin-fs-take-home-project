@@ -5,24 +5,18 @@ import History from "./History/History"
 import Wager from "./Wager/Wager"
 
 import { flipCoin } from "../../actions/game.js"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import * as messages from "../../messages"
 
 import { restart } from "../../actions/game.js"
 
 import { useState } from "react"
-import getUser from "../../util/getUser.js"
 
-const resultInit = {
-  mult: null,
-  multText: null,
-  delta: null,
-  resultType: null
-}
+const resultInit = { mult: null, multText: null, delta: null, resultType: null }
 
 const Game = () => {
-  const initUser = getUser()
-  const [user, setUser] = useState( initUser )
+
+  const game = useSelector((state) => state.game);
 
   const [result, setResult] = useState(resultInit)
 
@@ -30,35 +24,28 @@ const Game = () => {
 
 	const flipCoinHandle = async (wagerData) => {
 
-    // couldn't get the redux action to work
+    // couldn't get the redux action to return a response
+    // or set the state
     // running it manually
     const flipCoinFn = flipCoin(wagerData)
-    const resp = await flipCoinFn(dispatch)
-    setResult(resp)
-
-    // awkardly forcing render
-    const newUser = getUser()
-    setUser(newUser)
+    const respResult = await flipCoinFn(dispatch)
+    setResult(respResult)
 	}
-
 
   const restartHandle = async () => {
     // dispatch({ type: actionType.RESTART });
     await dispatch(restart());
-    const resetUser = getUser()
-    setUser( resetUser )
   }
-
 
   return (
     <div id={css.game} style={styles.game} >
-      <Balance user={user}/>
-      <History user={user}/>
+      <Balance game={game}/>
+      <History game={game}/>
       <Wager
         flipCoinHandle={flipCoinHandle}
         restart={restartHandle}
         result={result}
-        user={user}
+        game={game}
       />
     </div>
   )

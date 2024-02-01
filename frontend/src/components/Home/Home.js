@@ -2,13 +2,15 @@ import React from "react";
 import { Container, Grow, Paper, Typography } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import Game from "../Game/Game";
+import { useSelector } from "react-redux";
 
 import getUser from "../../util/getUser.js";
 
 const Home = () => {
-  const user = getUser()
 
-  const isSingedIn = user;
+  const profile = useSelector((state) => state.profile);
+
+  const isSingedIn = profile;
 
   return (
     <>

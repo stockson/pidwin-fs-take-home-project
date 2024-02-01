@@ -11,6 +11,7 @@ import Home from "./components/Home/Home";
 import PasswordSetting from "./components/PasswordSettings/PasswordSettings";
 
 const App = () => {
+
   return (
     <BrowserRouter>
       <Navbar />

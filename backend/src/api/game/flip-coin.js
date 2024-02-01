@@ -1,11 +1,11 @@
-import User from "../models/user.js";
-import runFlip from "../game/runFlip.js"
+import User from "../../models/user.js";
+import runFlip from "../../game/runFlip.js"
 
 // import { isNumberBetween } from "../../../frontend/src/shared/validator.js"
-import { isNumberBetween } from "../copied_from_front/validator.js"
-import getMultiplier from "../game/getMultiplier.js"
+import { isNumberBetween } from "../../copied_from_front/validator.js"
+import getMultiplier from "../../game/getMultiplier.js"
 
-import outUser from "../utils/outUser.js"
+import outUser from "../../utils/outUser.js"
 
 const flipCoin = async (req, res) => {
 	const userId = req.userId
@@ -40,16 +40,17 @@ const flipCoin = async (req, res) => {
 
 		tokens += ( delta * mult )
 
-    const respUser = await User.findByIdAndUpdate(
+    let respUser = await User.findByIdAndUpdate(
       existingUser._id,
       { tokens, history },
       { new: true }
     );
 
-    const userData = outUser(respUser)
-
     res.status(200).json({
-      user: userData,
+      game: {
+        tokens: respUser.tokens,
+        history: respUser.history,
+      },
       result: { mult, multText, delta, resultType },
     });
   } catch (error) {

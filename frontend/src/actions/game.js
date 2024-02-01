@@ -4,8 +4,8 @@ import * as messages from "../messages";
 
 export const flipCoin = (gameData) => async (dispatch) => {
   try {
-    const { data: { user, result } } = await api.flipCoin(gameData);
-    dispatch({ type: FLIP_COIN, user });
+    const { data: { game, result } } = await api.flipCoin(gameData);
+    dispatch({ type: FLIP_COIN, game });
 		return result
   } catch (error) {
 

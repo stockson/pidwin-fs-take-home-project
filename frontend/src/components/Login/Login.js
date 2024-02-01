@@ -9,13 +9,13 @@ import {
 } from "@mui/material";
 import Input from "./Input";
 // import { jwtDecode } from "jwt-decode";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { signup, login } from "../../actions/login";
+import { login } from "../../actions/login";
 import LockIcon from "@mui/icons-material/LockOutlined";
 import { styles } from "./styles";
 
-import getUser from "../../util/getUser.js"
+// import getUser from "../../util/getUser.js"
 
 
 const formDataInitVal = {
@@ -27,22 +27,25 @@ const formDataInitVal = {
 };
 
 const Login = () => {
+  const profile = useSelector((state) => state.profile);
+  const user = profile
+
+
   const [formData, setFormData] = useState(formDataInitVal);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-
-  const user = getUser()
 
   const dispatch = useDispatch();
   const history = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isLoggedIn) {
-      dispatch(login(formData, history));
-    } else {
-      dispatch(signup(formData, history));
-    }
+    dispatch(login(formData, history));
+    // if (isLoggedIn) {
+    //   dispatch(login(formData, history));
+    // } else {
+    //   dispatch(login(formData, history));
+    // }
   };
 
   const handleChange = (e) => {
@@ -57,7 +60,8 @@ const Login = () => {
     setIsLoggedIn((prevState) => !prevState);
   };
 
-  if (user !== "null" && user !== null) {
+  // if (user !== "null" && user !== null) {
+  if (profile && profile.name) {
     history("/");
     return null;
   } else {

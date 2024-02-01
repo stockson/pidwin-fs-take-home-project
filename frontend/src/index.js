@@ -9,7 +9,12 @@ import "./index.css";
 import reducers from "./reducers";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./themes/Default";
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+
+import { getLocalData } from "./util/localStorage"
+
+// localStorage.clear()
+
+const store = createStore(reducers, getLocalData(), compose(applyMiddleware(thunk)));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

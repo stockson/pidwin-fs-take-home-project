@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import User from "../models/user.js";
-import outUser from "../utils/outUser.js"
+import User from "../../models/user.js";
+import outUser from "../../utils/outUser.js"
+import genToken from "../../utils/genToken.js"
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -22,20 +22,11 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid Password" });
     }
 
-    const token = jwt.sign(
-      {
-        _id: existingUser._id,
-        // password: existingUser.password,
-      },
-      // "test",
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    const token = genToken(existingUser)
 
-    const userData = outUser(existingUser)
-
-    res.status(200).json({ token, user: userData });
+    res.status(200).json({ token, ...outUser(existingUser) });
   } catch (error) {
+    console.error(error)
     res.status(500).json({ message: "Something went wrong" });
   }
 };

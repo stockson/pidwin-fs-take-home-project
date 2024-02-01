@@ -15,7 +15,7 @@ const initWagerData = {
 	wagerAmount: 0,
 }
 
-const Wager = ({ flipCoinHandle, restart, result, user }) => {
+const Wager = ({ flipCoinHandle, restart, result, game }) => {
 
 	const [wagerData, setWagerData] = useState(initWagerData)
 	const [amountErr, setAmountErr] = useState(null)
@@ -25,7 +25,7 @@ const Wager = ({ flipCoinHandle, restart, result, user }) => {
 	}
 	const amountChange = (e) => {
 		const val = e.target.value
-		const { err } = isNumberBetween(val, 1, 100)
+		const { err } = isNumberBetween(val, 1, game.tokens)
 		setAmountErr(err)
 
 		// set val even if invalid so prev value isn't locked in
@@ -35,7 +35,7 @@ const Wager = ({ flipCoinHandle, restart, result, user }) => {
 
 	const flipCoinWrap = (e) => {
 		e.preventDefault()
-		const { valid, err } = isNumberBetween(wagerData.wagerAmount, 1, user.tokens)
+		const { valid, err } = isNumberBetween(wagerData.wagerAmount, 1, game.tokens)
 		if (!valid) return messages.error(err)
 		flipCoinHandle(wagerData)
 	}

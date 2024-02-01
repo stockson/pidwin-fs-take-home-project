@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import User from "../models/user.js";
-import outUser from "../utils/outUser.js"
+import User from "../../models/user.js";
+import outUser from "../../utils/outUser.js"
+import genToken from "../../utils/genToken.js"
 
 const signup = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
@@ -17,22 +17,15 @@ const signup = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    const result = await User.create({
+    const createdUser = await User.create({
       email,
       password: hashedPassword,
       name: `${firstName} ${lastName}`,
     });
-    const token = jwt.sign(
-      {
-        _id: result._id,
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
 
-    const userData = outUser(result)
+    const token = genToken(createdUser)
 
-    res.status(200).json({ token, user: userData });
+    res.status(200).json({ token, ...outUser(createdUser) });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
     console.log(error);

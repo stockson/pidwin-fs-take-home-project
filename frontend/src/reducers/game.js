@@ -1,18 +1,27 @@
-import { FLIP_COIN, RESTART } from '../constants/actionTypes';
-import getUserInitial from './getUserInitial';
+import { GAME_INIT, FLIP_COIN, RESTART, GAME_LOGOUT } from '../constants/actionTypes';
+import { setLocalData } from "../util/localStorage"
 
-const gameReducer = (state = getUserInitial(), action) => {
-    switch (action.type) {
-        case FLIP_COIN:
-            localStorage.setItem('user', JSON.stringify({ ...action?.user }));
-            return { ...state, user: action?.user };
+const gameInit = {
+	tokens: null,
+	history: null
+}
+// const gameInit = null
 
-        case RESTART:
-            localStorage.setItem('user', JSON.stringify({ ...action?.user }));
-            return { ...state, user: action?.user };
 
-        default:
-            return state;
-    }
+const gameReducer = (state = gameInit, action) => {
+	switch (action.type) {
+		case GAME_INIT:
+		case FLIP_COIN:
+		case RESTART:
+			setLocalData( "game", action.game )
+			return { ...state, ...action.game };
+
+		case GAME_LOGOUT:
+			localStorage.clear(); // redundant with profile logout
+			return { ...state, ...gameInit };
+
+		default:
+			return state;
+	}
 }
 export default gameReducer;

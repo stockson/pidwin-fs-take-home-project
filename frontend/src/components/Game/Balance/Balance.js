@@ -1,16 +1,13 @@
 // import styles from './Balance.module.css'
 import styles from "./styles.js"
-import getUser from "../../../util/getUser.js"
-import { useSelector } from "react-redux"
 
 
-const Balance = () => {
-	const user = getUser()
+const Balance = ({ game }) => {
 
 	return (
 		<div style={styles.balance}>
 			<span>Tokens: </span>
-			<span>{user.tokens}</span>
+			<span>{game.tokens}</span>
 		</div>
 	)
 }

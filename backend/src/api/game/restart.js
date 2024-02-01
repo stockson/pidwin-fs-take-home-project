@@ -1,6 +1,6 @@
-import User from "../models/user.js";
+import User from "../../models/user.js";
 
-import outUser from "../utils/outUser.js"
+import outUser from "../../utils/outUser.js"
 
 const restart = async (req, res) => {
 	const userId = req.userId
@@ -21,7 +21,10 @@ const restart = async (req, res) => {
     );
 
     res.status(200).json({
-      user: outUser(respUser)
+      game: {
+        tokens: respUser.tokens,
+        history: respUser.history,
+      }
     });
   } catch (error) {
     console.error(error)

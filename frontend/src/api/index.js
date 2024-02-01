@@ -1,12 +1,12 @@
 import axios from "axios";
+import { getToken } from "../util/localStorage";
 
 const API = axios.create({ baseURL: "http://localhost:5000" });
 API.interceptors.request.use((req) => {
 
-  if (localStorage.getItem("token")) {
-    req.headers.Authorization = `Bearer ${localStorage.getItem("token")
-      }`;
-  }
+  const tokenData = getToken()
+  if (tokenData)
+    req.headers.Authorization = `Bearer ${tokenData.token}`;
 
   return req;
 });
@@ -25,5 +25,5 @@ export const changePassword = (formData) =>
 
 // Game
 // keeping route path because user is mutating
-export const flipCoin = (flipData) => API.post("/api/user/flipCoin", flipData);
-export const restart = () => API.post("/api/user/restart");
+export const flipCoin = (flipData) => API.post("/api/game/flipCoin", flipData);
+export const restart = () => API.post("/api/game/restart");

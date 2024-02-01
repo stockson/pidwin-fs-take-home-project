@@ -2,10 +2,14 @@
 
 const outUser = (user) => {
 	return {
-		name: user.name,
-		email: user.email,
-		tokens: user.tokens,
-		history: user.history,
+		profile: {
+			name: user.name,
+			email: user.email,
+		},
+		game: {
+			tokens: user.tokens,
+			history: user.history,
+		}
 	}
 }
 
