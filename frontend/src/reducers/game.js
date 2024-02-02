@@ -1,14 +1,13 @@
 import { GAME_INIT, FLIP_COIN, RESTART, GAME_LOGOUT } from '../constants/actionTypes';
 import { setLocalData } from "../util/localStorage"
 
-const gameInit = {
+const getGameInit = () => ({
 	tokens: null,
 	history: null
-}
-// const gameInit = null
+})
 
 
-const gameReducer = (state = gameInit, action) => {
+const gameReducer = (state = getGameInit(), action) => {
 	switch (action.type) {
 		case GAME_INIT:
 		case FLIP_COIN:
@@ -18,7 +17,7 @@ const gameReducer = (state = gameInit, action) => {
 
 		case GAME_LOGOUT:
 			localStorage.clear(); // redundant with profile logout
-			return { ...state, ...gameInit };
+			return { ...state, ...getGameInit() };
 
 		default:
 			return state;

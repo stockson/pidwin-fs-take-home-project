@@ -1,40 +1,33 @@
 import React, { useEffect } from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@mui/material";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
-// import getUser from "../../util/getUser.js"
 import { getToken } from "../../util/localStorage";
 import * as messages from "../../messages";
 
 const Navbar = () => {
-  // const initUser = getUser() // move to App, include game ?
-  // const [user, setUser] = useState( initUser );
   const profile = useSelector((state) => state.profile);
 
   const dispatch = useDispatch();
-  let location = useLocation();
+  // let location = useLocation();
   const history = useNavigate();
 
   const logout = () => {
 
-    // not sure how to do parent reducer for both
-    dispatch({ type: actionType.LOGOUT });
-    dispatch({ type: actionType.GAME_LOGOUT });
+    // consolidate into one action, parent reducer?
+    dispatch({ type: actionType.GAME_LOGOUT, game: null });
+    dispatch({ type: actionType.LOGOUT, profile: null });
+
+    messages.info("Logged Out")
 
     history("/auth");
-    // setUser("null"); // dispatch should handle this?
   };
 
-  // const restartHandle = () => {
-  //   // dispatch({ type: actionType.RESTART });
-  //   dispatch(restart(history));
-  //   const resetUser = getUser()
-  //   setUser( resetUser )
-  // }
   const user = profile
   const loggedIn = user && user.name
+
 
   // move this out of NavBar
   useEffect(() => {
@@ -46,12 +39,13 @@ const Navbar = () => {
       }
       if (tokenData.decode.exp * 1000 < new Date().getTime()) {
         messages.error("Login Expired, Logging Out")
+
+        // useEffect bug -- needs useCallback?
         logout();
       }
     }
-    // const defUser = getUser()
-    // setUser(defUser);
-  }, [location]);
+  // }, [location]);
+  }, [loggedIn]);
 
 
   return (
@@ -86,13 +80,6 @@ const Navbar = () => {
               >
                 Set Password
               </Button>
-              {/* <Button
-                variant="contained"
-                color="secondary"
-                onClick={restartHandle}
-              >
-                Restart
-              </Button> */}
               <Button
                 variant="contained"
                 sx={styles.logout}

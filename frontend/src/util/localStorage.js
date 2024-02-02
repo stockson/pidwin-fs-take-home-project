@@ -1,25 +1,23 @@
 import { jwtDecode } from "jwt-decode";
 
+const ROOT_NAME = "userData"
+const defaultData = {
+	profile: null,
+	game: null,
+}
 
 export const getLocalData = () => {
-	const profileStr = localStorage.getItem("profile")
-	console.log(profileStr)
-	const profile = profileStr ? JSON.parse(profileStr) : null
-	console.log(profile)
-
-	const gameStr = localStorage.getItem("game")
-	console.log(gameStr)
-	const game = gameStr ? JSON.parse(gameStr) : null
-	console.log(game)
-
-	return { profile, game }
+	const local = sanitizeItem(ROOT_NAME)
+	return local || defaultData
 }
 
 // switch to keyof in TS
 export const setLocalData = (key, val) => {
-	localStorage.setItem(key, JSON.stringify(val))
+	const localData = getLocalData()
+	localData[key] = val
+	const dataStr = JSON.stringify(localData)
+	localStorage.setItem(ROOT_NAME, dataStr)
 }
-
 
 export const setToken = ( token ) => {
 	const decode = jwtDecode( token )
@@ -27,6 +25,14 @@ export const setToken = ( token ) => {
 	localStorage.setItem("token", json)
 }
 export const getToken = () => {
-	const jsonStr = localStorage.getItem("token")
-	return jsonStr ? JSON.parse(jsonStr) : null
+	return sanitizeItem("token")
+}
+
+
+function sanitizeItem(key) {
+	let item = localStorage.getItem(key)
+
+	if (item === null || item === "null") return null
+	else if (item === undefined || item === "undefined") return undefined
+	else return JSON.parse(item)
 }

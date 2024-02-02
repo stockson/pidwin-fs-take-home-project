@@ -12,12 +12,13 @@ import { styles } from "./styles";
 import LockIcon from "@mui/icons-material/LockRounded";
 import { changePassword } from "../../actions/login";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import getUser from "../../util/getUser"
+import { useDispatch, useSelector } from "react-redux";
 
 const PasswordSetting = () => {
-  const user = getUser()
-  const isSingedIn = user;
+  const profile = useSelector((state) => state.profile);
+  const user = profile
+  const isSignedIn = profile && profile.name;
+
   const history = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [changeFormData, setChangeFormData] = useState({
@@ -40,13 +41,14 @@ const PasswordSetting = () => {
     dispatch(changePassword(changeFormData, history));
   };
 
-  useEffect(() => {
-    if (isSingedIn == "null" || isSingedIn === null) {
-      history("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isSignedIn) {
+  //     history("/");
+  //   }
+  // // }, []);
+  // }, [history, isSignedIn]);
 
-  if (isSingedIn !== "null" && isSingedIn !== null) {
+  if (isSignedIn) {
     return (
       <div>
         <Container component="main" maxWidth="xs">

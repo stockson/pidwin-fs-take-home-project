@@ -11,6 +11,8 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
+// Handle token expiration here?
+
 // API.interceptors.response.use((resp) => {
 //   return resp;
 // }, (err) => {
@@ -24,6 +26,5 @@ export const changePassword = (formData) =>
   API.post("/api/user/changePassword", formData);
 
 // Game
-// keeping route path because user is mutating
 export const flipCoin = (flipData) => API.post("/api/game/flipCoin", flipData);
 export const restart = () => API.post("/api/game/restart");

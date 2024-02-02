@@ -14,7 +14,6 @@ export const flipCoin = (gameData) => async (dispatch) => {
       messages.error("Login Expired")
       await dispatch({ type: LOGOUT })
     }
-
     messages.error(error.response.data.message);
   }
 };
@@ -23,8 +22,8 @@ export const flipCoin = (gameData) => async (dispatch) => {
 
 export const restart = () => async (dispatch) => {
   try {
-    const { data: { user } } = await api.restart();
-    dispatch({ type: RESTART, user });
+    const { data: { game } } = await api.restart();
+    dispatch({ type: RESTART, game });
     messages.success("Tokens Reset")
   } catch (error) {
     if (error.response.status === 401) {

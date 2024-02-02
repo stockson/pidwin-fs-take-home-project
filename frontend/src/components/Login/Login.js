@@ -8,14 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 import Input from "./Input";
-// import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../actions/login";
+import { login, signup } from "../../actions/login";
 import LockIcon from "@mui/icons-material/LockOutlined";
 import { styles } from "./styles";
 
-// import getUser from "../../util/getUser.js"
 
 
 const formDataInitVal = {
@@ -26,9 +24,11 @@ const formDataInitVal = {
   confirmPassword: "",
 };
 
+
+// TODO: split Login to Login and SignUp
+
 const Login = () => {
   const profile = useSelector((state) => state.profile);
-  const user = profile
 
 
   const [formData, setFormData] = useState(formDataInitVal);
@@ -40,12 +40,11 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(formData, history));
-    // if (isLoggedIn) {
-    //   dispatch(login(formData, history));
-    // } else {
-    //   dispatch(login(formData, history));
-    // }
+    if (isLoggedIn) {
+      dispatch(login(formData, history));
+    } else {
+      dispatch(signup(formData, history));
+    }
   };
 
   const handleChange = (e) => {
@@ -62,7 +61,13 @@ const Login = () => {
 
   // if (user !== "null" && user !== null) {
   if (profile && profile.name) {
-    history("/");
+
+    // causes bug that I haven't been able to figure out
+    // history("/");
+
+    // scenario is an exception, going to throw err instead
+    // throw Error("already logged in")
+
     return null;
   } else {
     return (

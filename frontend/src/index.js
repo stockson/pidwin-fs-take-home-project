@@ -13,8 +13,9 @@ import { theme } from "./themes/Default";
 import { getLocalData } from "./util/localStorage"
 
 // localStorage.clear()
+const localData = getLocalData()
 
-const store = createStore(reducers, getLocalData(), compose(applyMiddleware(thunk)));
+const store = createStore(reducers, localData, compose(applyMiddleware(thunk)));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
