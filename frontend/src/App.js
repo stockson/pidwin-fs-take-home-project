@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "./components/Navbar/Navbar";
+import Intro from "./components/Intro/Intro";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import PasswordSetting from "./components/PasswordSettings/PasswordSettings";
@@ -15,6 +16,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Navbar />
+      <Intro />
       <ToastContainer
         position="bottom-left"
         autoClose={3000}

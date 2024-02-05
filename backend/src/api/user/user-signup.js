@@ -28,7 +28,6 @@ const signup = async (req, res) => {
     res.status(200).json({ token, ...outUser(createdUser) });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
-    console.log(error);
   }
 };
 

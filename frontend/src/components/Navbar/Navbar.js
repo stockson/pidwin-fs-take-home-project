@@ -1,57 +1,61 @@
-import React, { useEffect } from "react";
-import { AppBar, Typography, Toolbar, Avatar, Button } from "@mui/material";
+import React, { useState } from "react";
+import { AppBar, Typography, Toolbar, Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import * as actionType from "../../constants/actionTypes";
+import { useSelector, useDispatch } from "react-redux";
 import { styles } from "./styles";
-import { getToken } from "../../util/localStorage";
-import * as messages from "../../messages";
+// import * as actionType from "../../constants/actionTypes";
+// import * as messages from "../../messages";
+import { logout } from "../../actions/login/index.js";
+import { restart } from "../../actions/game/index.js";
+import "./Navbar.css";
 
 const Navbar = () => {
   const profile = useSelector((state) => state.profile);
+  // const token = useSelector((state) => state.token);
+
+  const [anchorElUser, setAnchorElUser] = useState(null)
 
   const dispatch = useDispatch();
   // let location = useLocation();
   const history = useNavigate();
 
-  const logout = () => {
-
-    // consolidate into one action, parent reducer?
-    dispatch({ type: actionType.GAME_LOGOUT, game: null });
-    dispatch({ type: actionType.LOGOUT, profile: null });
-
-    messages.info("Logged Out")
-
-    history("/auth");
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  }
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   const user = profile
-  const loggedIn = user && user.name
+  const loggedIn = profile;
 
+  const logoutHandler = () => {
+    setAnchorElUser(null);
+    logout(dispatch, history);
+  }
+  const passwordHandler = () => {
+    setAnchorElUser(null);
+    history("/password");
+  }
+  const restartHandler = () => {
+    setAnchorElUser(null);
+    dispatch(restart());
+  }
 
-  // move this out of NavBar
-  useEffect(() => {
-    if (loggedIn) {
-      const tokenData = getToken()
-      if (!tokenData) {
-        messages.error("Local Storage Data Missing, Logging Out")
-        return logout()
-      }
-      if (tokenData.decode.exp * 1000 < new Date().getTime()) {
-        messages.error("Login Expired, Logging Out")
+  // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-        // useEffect bug -- needs useCallback?
-        logout();
-      }
-    }
-  // }, [location]);
-  }, [loggedIn]);
+  const profileLinks = [
+    { title: "Change Password", onClick: passwordHandler },
+    { title: "Restart", onClick: restartHandler },
+    { title: "Logout", onClick: logoutHandler },
+  ]
 
+  if (!profile) return null
 
   return (
     <div style={styles.appBarWrap}>
       <AppBar sx={styles.appBar} position="static" color="inherit">
-        <div style={styles.brandContainer}>
+        <div>
           <Typography
             component={Link}
             to="/"
@@ -59,19 +63,51 @@ const Navbar = () => {
             variant="h5"
             align="center"
           >
-            CoinToss
+            <div id="logo">
+              <span>Coin</span>
+              <span>Toss</span>
+            </div>
           </Typography>
         </div>
         <Toolbar sx={styles.toolbar}>
           {loggedIn ? (
             <div style={styles.profile}>
-              <Avatar sx={styles.purple} alt={user.name} src={user.picture}>
-                {user.name.charAt(0)}
-              </Avatar>
               <Typography sx={styles.userName} variant="h6">
                 {user.name}
               </Typography>
-              <Button
+              <Avatar
+                sx={{...styles.purple, cursor: 'pointer'}}
+                alt={user.name}
+                src={user.picture}
+                onClick={handleOpenUserMenu}
+              >
+                {user.name.charAt(0)}
+              </Avatar>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {profileLinks.map(({title, onClick}) => (
+                  <MenuItem key={title} onClick={onClick}>
+                    <Typography textAlign="center">{title}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+
+
+              {/* <Button
                 variant="contained"
                 color="secondary"
                 onClick={() => {
@@ -84,10 +120,10 @@ const Navbar = () => {
                 variant="contained"
                 sx={styles.logout}
                 color="secondary"
-                onClick={logout}
+                onClick={logoutHandler}
               >
                 Logout
-              </Button>
+              </Button> */}
             </div>
           ) : (
             <Button

@@ -7,7 +7,7 @@ import * as wagerTypes from "../../../shared/wagerTypes.js"
 import * as messages from "../../../messages";
 import { isNumberBetween } from "../../../shared/validator.js"
 
-import ResultComp from "./ResultComp.js"
+import Result from "./Result/Result.js"
 
 
 const initWagerData = {
@@ -43,9 +43,7 @@ const Wager = ({ flipCoinHandle, restart, result, game }) => {
 
 	return (
 		<div id={css.wager}>
-			<div id={css.wagerResults}>
-				<ResultComp result={result}/>
-			</div>
+			<Result result={result}/>
 
 			<div className={css.inputs}>
 
@@ -65,7 +63,6 @@ const Wager = ({ flipCoinHandle, restart, result, game }) => {
 					>Tails</Button>
 				</div>
 
-				{/* internet says I should use BaseNumberInput -- skipping */}
 				<TextField
 					variant="filled"
 					label= {amountErr ? "Error" : "Bet Amount" }
@@ -84,7 +81,6 @@ const Wager = ({ flipCoinHandle, restart, result, game }) => {
 					}}
 				/>
 
-
 				<Button
 					type="submit"
 					fullWidth
@@ -93,14 +89,6 @@ const Wager = ({ flipCoinHandle, restart, result, game }) => {
 					color="primary"
 					onClick={flipCoinWrap}
 				>Flip Coin</Button>
-				<Button
-					type="submit"
-					fullWidth
-					sx={styles.submit}
-					variant="outline"
-					color="secondary"
-					onClick={restart}
-				>Restart</Button>
 
 			</div>
 		</div>

@@ -4,10 +4,11 @@ import { deepPurple } from "@mui/material/colors";
 
 export const styles = {
   appBarWrap: {
-    padding: theme.spacing(4)
+    // padding: theme.spacing(4)
   },
   appBar: {
-    borderRadius: 15,
+    // borderRadius: 5,
+    borderRadius: 0,
     // margin: "30px 0",
     display: "flex",
     flexDirection: "row",
@@ -27,17 +28,18 @@ export const styles = {
   profile: {
     display: "flex",
     justifyContent: "right",
-    gap: "20px",
+    gap: "10px",
     width: "600px",
   },
   userName: {
     display: "flex",
     alignItems: "center",
+    paddingRight: "5px",
   },
-  brandContainer: {
-    display: "flex",
-    alignItems: "center",
-  },
+  // brandContainer: {
+  //   display: "flex",
+  //   alignItems: "center",
+  // },
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],

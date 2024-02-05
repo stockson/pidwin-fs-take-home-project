@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { login, signup } from "../../actions/login";
 import LockIcon from "@mui/icons-material/LockOutlined";
 import { styles } from "./styles";
-
+// import * as messages from "../../messages";
 
 
 const formDataInitVal = {
@@ -30,16 +30,17 @@ const formDataInitVal = {
 const Login = () => {
   const profile = useSelector((state) => state.profile);
 
-
   const [formData, setFormData] = useState(formDataInitVal);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+
 
   const dispatch = useDispatch();
   const history = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // dispatch(login(formData, history))
     if (isLoggedIn) {
       dispatch(login(formData, history));
     } else {
@@ -59,14 +60,10 @@ const Login = () => {
     setIsLoggedIn((prevState) => !prevState);
   };
 
-  // if (user !== "null" && user !== null) {
-  if (profile && profile.name) {
+  if (profile) {
 
-    // causes bug that I haven't been able to figure out
+    // messages.error("Already Logged In")
     // history("/");
-
-    // scenario is an exception, going to throw err instead
-    // throw Error("already logged in")
 
     return null;
   } else {
@@ -79,9 +76,9 @@ const Login = () => {
               <LockIcon />
             </Avatar>
             <Typography variant="h5" color="primary">
-              {isLoggedIn ? "Login" : "Logout"}
+              {isLoggedIn ? "Login" : "Sign Up"}
             </Typography>
-            <form sx={styles.form} onSubmit={handleSubmit}>
+            <form style={styles.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 {!isLoggedIn && (
                   <>

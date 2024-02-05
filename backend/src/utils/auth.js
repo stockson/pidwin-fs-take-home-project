@@ -24,9 +24,11 @@ const auth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    // access URL when logged out? Untested
     if (error.name === "TokenExpiredError") {
-      return res.status(401).json({ message: "Token Expired", expired: true });
+      // switch to enum that front can use
+      // instead of using 401 status
+      const TOKEN_EXPIRED = "TOKEN_EXPIRED"
+      return res.status(401).json({ errI: TOKEN_EXPIRED, message: "Login Token Expired" });
     }
     console.error(error)
     res.status(500).json({ message: "Something went wrong" })

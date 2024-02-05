@@ -1,0 +1,19 @@
+
+
+#logo {
+	white-space: nowrap;
+}
+#logo span {
+	display: inline-block;
+	font: 600 2.5rem tahoma, sans-serif;
+	/* text-transform: uppercase; */
+}
+#logo span:first-of-type {
+	margin-right: 0px;
+	-webkit-text-stroke: 1px #1976d2;
+	color: transparent;
+	/* color: #1976d2; */
+}
+#logo span:last-of-type {
+	color: #1976d2;
+}

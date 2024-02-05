@@ -1,0 +1,57 @@
+
+
+#history {
+	position: absolute;
+	bottom: 30px;
+	left: 30px;
+
+	background: #fff;
+	border: solid rgba(0,0,0,0.4) 1px;
+	border-radius: 15px;
+	box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
+	padding: 30px;
+
+	font-family: "tahoma";
+	letter-spacing: 0.02rem;
+	-webkit-font-smoothing: antialiased;
+
+	/* temp */
+	min-width: 225px;
+}
+
+#history h1 {
+	font-size: 1.6rem;
+	padding-bottom: 10px;
+	border-bottom: solid rgba(0,0,0, 0.8) 1px;
+	/* color: #1976d2; */
+}
+#history ul {
+	padding-top: 10px;
+}
+#history li {
+	font-size: 1.2rem;
+	padding: 5px 0;
+	color: #1976d2;
+}
+/* #history li.win { color: #080;} */
+#history li.lose { color: #800;}
+#history li span {
+	display: inline-block;
+	/* width: 25%; */
+	text-align: left;
+	padding-right: 10px;
+}
+#history li span:nth-of-type(1) { width: 50px; }
+#history li span:nth-of-type(2) {
+	width: 60px;
+	text-transform: capitalize;
+}
+#history li span:nth-of-type(3) {
+	width: 20px;
+	text-align: right;
+	font-family: monospace, monospace;
+}
+#history li span:last-of-type {
+	padding-right: 0;
+	font-family: monospace, monospace;
+}

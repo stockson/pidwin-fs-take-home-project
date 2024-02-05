@@ -1,21 +1,15 @@
 import { LOGIN, LOGOUT } from '../constants/actionTypes';
-import { setLocalData } from "../util/localStorage"
 
-const getProfileInit = () => ({
-  name: null,
-  email: null,
-})
-// const profileInit = null
 
-const profileReducer = (state = getProfileInit, action) => {
+const initState = null
+
+const profileReducer = (state = initState, action) => {
   switch (action.type) {
     case LOGIN:
-      setLocalData("profile", action.profile)
       return { ...state, ...action.profile };
 
     case LOGOUT:
-      localStorage.clear();
-      return { ...state, ...getProfileInit()};
+      return { ...state, ...initState};
 
     default:
       return state;

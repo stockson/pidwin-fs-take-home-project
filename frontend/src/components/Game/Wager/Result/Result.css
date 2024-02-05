@@ -1,0 +1,40 @@
+
+
+#result {
+	height: 240px;
+	padding: 20px 0;
+	/* border: solid #000 1px; */
+	text-align: center;
+	font: 1.5rem tahoma, arial, sans-serif;
+	line-height: 2rem;
+
+}
+
+#result div {
+	padding-bottom: 8px;
+}
+
+#result .type {
+	font: 400 1.6rem verdana, sans-serif;
+	color: #1976d2;
+	text-transform: capitalize;
+	/* text-transform: uppercase; */
+}
+
+#result .win, #result .lose {
+	font: 400 3.0rem impact, sans-serif;
+}
+#result .win {
+	color: #080;
+}
+#result .lose {
+	color: #800;
+}
+#result .amount {
+	font: 300 2.0rem tahoma, tahoma, sans-serif;
+	letter-spacing: 0.05rem;
+}
+#result .bonus {
+	font: 400 2.0rem tahoma, sans-serif;
+	color: #000;
+}

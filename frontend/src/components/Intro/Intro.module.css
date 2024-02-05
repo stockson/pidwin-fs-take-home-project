@@ -1,0 +1,85 @@
+
+/* transitions would be more concise */
+@keyframes top {
+	to { opacity: 1; }
+}
+@keyframes bottom-first {
+	to {
+		opacity: 1;
+		transform: scale(1) translate(0, 0);
+	}
+}
+@keyframes bottom-last {
+	to {
+		opacity: 1;
+		transform: scale(1) translate(0, 0);
+	}
+}
+
+
+#intro {
+	padding-top: 100px;
+	padding-top: 10vh;
+	text-align: center;
+}
+#intro .top {
+	font: italic 400 2.5rem tahoma, sans-serif;
+
+	/* pulled from theme */
+	/* color: rgb(103, 58, 183); */
+	/* color: #666; */
+	color: #1976d2;
+	color: #444;
+}
+#intro .bottom {
+	font: 400 7.0rem impact, tahoma, sans-serif;
+
+	/* pulled from theme */
+	color: #1976d2;
+	/* color: #444; */
+
+	/* font-variant: small-caps; */
+	text-transform: uppercase;
+}
+
+#intro .bottom span {
+	display: inline-block;
+}
+#intro .bottom span:first-of-type {
+	margin-right: 5px;
+
+	/* color pulled from theme */
+	-webkit-text-stroke: 3px #1976d2;;
+	/* -webkit-text-stroke: 3px #444;; */
+	color: transparent;
+
+	/* anims */
+	opacity: 0;
+	transform: scale(3) translate(-20%, 0%);
+	animation: bottom-first 0.5s 1.5s ease-in forwards;
+}
+#intro .bottom span:last-of-type {
+	margin-left: 5px;
+
+	/* anims */
+	opacity: 0;
+	transform: scale(3) translate(20%, 0%);
+	animation: bottom-last 0.5s 1.8s linear forwards;
+}
+
+
+/* animations  */
+#intro .top {
+	opacity: 0;
+	animation: top 2s ease-in-out forwards;
+}
+#intro .bottom span:last-of-type {
+	opacity: 0;
+	transform: scale(3) translate(20%, 20%);
+	animation: bottom-last 0.3s 1.8s linear forwards;
+}
+#intro .bottom span:last-of-type {
+	opacity: 0;
+	transform: scale(3) translate(20%, 20%);
+	animation: bottom-last 0.3s 1.8s linear forwards;
+}

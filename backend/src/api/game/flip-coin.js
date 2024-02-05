@@ -5,7 +5,6 @@ import runFlip from "../../game/runFlip.js"
 import { isNumberBetween } from "../../copied_from_front/validator.js"
 import getMultiplier from "../../game/getMultiplier.js"
 
-import outUser from "../../utils/outUser.js"
 
 const flipCoin = async (req, res) => {
 	const userId = req.userId
@@ -13,6 +12,8 @@ const flipCoin = async (req, res) => {
     console.error("No User ID")
 		return res.status(401).json({ message: "Unauthenticated" });
   }
+
+  // return res.status(401).json({ errId: "TOKEN_EXPIRED", message: "Token Expired" });
 
   let { wagerType, wagerAmount } = req.body;
 
@@ -35,7 +36,7 @@ const flipCoin = async (req, res) => {
 		const { delta, resultType } = runFlip(wagerType, wagerAmount)
 		const { mult, multText } = getMultiplier(delta, history)
 
-		history.unshift({ wagerType, delta, mult: mult, createdDate: new Date() })
+		history.unshift({ wagerType, delta, mult, createdDate: new Date() })
 		history = history.slice(0, 10)
 
 		tokens += ( delta * mult )

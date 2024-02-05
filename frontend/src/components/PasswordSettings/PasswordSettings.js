@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Button,
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 const PasswordSetting = () => {
   const profile = useSelector((state) => state.profile);
   const user = profile
-  const isSignedIn = profile && profile.name;
+  const isSignedIn = profile
 
   const history = useNavigate();
   const [showPassword, setShowPassword] = useState(false);

@@ -1,24 +1,30 @@
 import axios from "axios";
-import { getToken } from "../util/localStorage";
+import store from "../store"
+import * as actionTypes from "../constants/actionTypes"
 
 const API = axios.create({ baseURL: "http://localhost:5000" });
 API.interceptors.request.use((req) => {
 
-  const tokenData = getToken()
-  if (tokenData)
-    req.headers.Authorization = `Bearer ${tokenData.token}`;
+  const { token } = store.getState()
+  if (token)
+    req.headers.Authorization = `Bearer ${token.encoded}`;
 
   return req;
 });
 
-// Handle token expiration here?
+API.interceptors.response.use((resp) => {
+  return resp;
+}, (error) => {
+  console.error(error)
 
-// API.interceptors.response.use((resp) => {
-//   return resp;
-// }, (err) => {
-//   // if (err.response.status == 401)
-//   return Promise.reject(err)
-// })
+  // Handle Token Expiration
+  // should switch from status code to errId
+  if (error.response.status === 401) {
+    store.dispatch({ type: actionTypes.LOGOUT })
+  }
+
+  return Promise.reject(error)
+})
 
 export const login = (formData) => API.post("/api/user/login", formData);
 export const signUp = (formData) => API.post("/api/user/signup", formData);

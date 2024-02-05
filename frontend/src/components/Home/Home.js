@@ -1,27 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { Container, Grow, Paper, Typography } from "@mui/material";
-import { Typography } from "@mui/material";
-// import { jwtDecode } from "jwt-decode";
 import Game from "../Game/Game";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"
 
 
 const Home = () => {
 
   const profile = useSelector((state) => state.profile);
+  const nav = useNavigate()
 
-  const isSingedIn = profile && profile.name;
+  useEffect( () => {
+    if (!profile)
+      nav("/auth")
+  }, [profile, nav])
+
+  if (!profile) {
+    return null // short circuit instead of if/else
+  }
 
   return (
-    <>
-      {isSingedIn !== "null" && isSingedIn !== null ? (
-        <Game />
-      ) : (
-        <Typography variant="h4" align="center" color="primary">
-          Login to Play
-        </Typography>
-      )}
-    </>
+    <Game />
   );
 };
 

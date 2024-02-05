@@ -1,6 +1,6 @@
 I don't know a great way to do this without creating a separate module,
 merging the front and back, or importing a backend API interface
-into the frontend, but I can't do that locally
+into the frontend, but I can't do that while keeping the project locally contained
 
 A local/linked module would work,
-but that won't be automatically installed from a new dev environment.
+but that won't be automatically installed in a new dev environment.

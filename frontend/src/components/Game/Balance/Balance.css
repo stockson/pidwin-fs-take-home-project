@@ -1,0 +1,32 @@
+/*
+@keyframes balanceDelta {
+	from {
+		opacity: 1;
+		transform: translateY(-100%);
+	}
+	to {
+		transform: translateY(-300%);
+		opacity: 0;
+	}
+} */
+
+#balance-delta {
+	position: absolute;
+	top: 0;
+	right: 0;
+	/* animation: balanceDelta 2s linear forwards; */
+}
+
+#balance-delta .item {
+	font: 600 2.5rem tahoma, sans-serif;
+	transform: translateY(-100%);
+	color: #a00;
+}
+#balance-delta .item.positive {
+	color: #0a0;
+}
+#balance-delta .item.active {
+	opacity: 0;
+	transform: translateY(-300%);
+	transition: opacity 0.5s 0.5s, transform 1s;
+}

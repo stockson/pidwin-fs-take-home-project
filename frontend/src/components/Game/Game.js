@@ -4,11 +4,9 @@ import Balance from "./Balance/Balance"
 import History from "./History/History"
 import Wager from "./Wager/Wager"
 
-import { flipCoin } from "../../actions/game.js"
+import { flipCoin } from "../../actions/game"
 import { useDispatch, useSelector } from "react-redux";
 // import * as messages from "../../messages"
-
-import { restart } from "../../actions/game.js"
 
 import { useState } from "react"
 
@@ -24,26 +22,20 @@ const Game = () => {
 
 	const flipCoinHandle = async (wagerData) => {
 
-    // couldn't get the redux action to return a response
-    // or set the state
+    // couldn't get the thunk to return a response
+    // state shouldn't persist, not adding it
     // running it manually
     const flipCoinFn = flipCoin(wagerData)
     const respResult = await flipCoinFn(dispatch)
     setResult(respResult)
 	}
 
-  const restartHandle = async () => {
-    // dispatch({ type: actionType.RESTART });
-    await dispatch(restart());
-  }
-
   return (
     <div id={css.game} style={styles.game} >
-      <Balance game={game}/>
+      <Balance game={game} result={result}/>
       <History game={game}/>
       <Wager
         flipCoinHandle={flipCoinHandle}
-        restart={restartHandle}
         result={result}
         game={game}
       />
